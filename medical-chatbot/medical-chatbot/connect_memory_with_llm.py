@@ -5,9 +5,8 @@ from langchain_core.prompts import PromptTemplate
 from langchain_community.vectorstores import FAISS
 from langchain_classic.chains import RetrievalQA
 
-## Uncomment the following files if you're not using pipenv as your virtual environment manager
-#from dotenv import load_dotenv, find_dotenv
-#load_dotenv(find_dotenv())
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
 
 
 # Step 1: Setup LLM (Mistral with HuggingFace)

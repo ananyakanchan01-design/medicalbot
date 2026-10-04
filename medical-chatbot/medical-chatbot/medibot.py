@@ -108,16 +108,19 @@ def main():
     if prompt:
         st.chat_message('user').markdown(prompt)
 
-        CUSTOM_PROMPT_TEMPLATE = """
-        Use the pieces of information provided in the context to answer user's question.
-        If you dont know the answer, just say that you dont know, dont try to make up an answer. 
-        Dont provide anything out of the given context
+        CUSTOM_PROMPT_TEMPLATE = """You are a helpful and accurate medical AI assistant.
+Answer the user's question clearly based on the provided medical context.
+- If the user asks about a cure or treatment, provide any treatment, medication, or management information mentioned in the context (such as bronchodilators, inhalers, avoiding triggers, or lifestyle adjustments).
+- If the condition cannot be permanently cured, clarify that it is managed/controlled through treatment.
+- If the context has insufficient information for the question, state clearly what is available in the context and provide helpful medical context.
 
-        Context: {context}
-        Question: {question}
+Context:
+{context}
 
-        Start the answer directly. No small talk please.
-        """
+Question: {question}
+
+Start the answer directly with clear medical details. No small talk.
+"""
         
         try: 
             with st.spinner("Searching medical knowledge base and generating answer..."):
@@ -138,7 +141,7 @@ def main():
                 qa_chain = RetrievalQA.from_chain_type(
                     llm=llm_instance,
                     chain_type="stuff",
-                    retriever=vectorstore.as_retriever(search_kwargs={'k': 3}),
+                    retriever=vectorstore.as_retriever(search_kwargs={'k': 5}),
                     return_source_documents=True,
                     chain_type_kwargs={'prompt': set_custom_prompt(CUSTOM_PROMPT_TEMPLATE)}
                 )
