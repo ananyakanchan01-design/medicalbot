@@ -8,7 +8,6 @@ langchain-classic
 faiss-cpu
 sentence-transformers
 torch
-transformers<4.46
-numpy<2
+transformers
 python-dotenv
 pypdf
